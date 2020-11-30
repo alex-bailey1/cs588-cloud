@@ -1,0 +1,8 @@
+db.detector.updateMany({
+  locationtext: "Foster NB"
+},
+{
+  "$set": {
+    "milepost": 22.6
+  }
+})

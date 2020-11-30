@@ -1,0 +1,29 @@
+db.station.aggregate({
+  $match: {
+    stationid: 1046
+  }
+},
+{
+  $graphLookup: {
+    from: "station",
+    startWith: "$stationid",
+    connectFromField: "downstream",
+    connectToField: "stationid",
+    as: "route",
+    
+  },
+  
+},
+{
+  "$unwind": "$route"
+},
+{
+  $sort: {
+    "route.milepost": 1
+  }
+},
+{
+  $project: {
+    "route.locationtext": 1
+  }
+})

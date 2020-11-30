@@ -1,0 +1,29 @@
+db.detector.aggregate([
+  {
+    $unwind: "$time_items"
+  },
+  {
+    $match: {
+      $or: [
+        {
+          "time_items.speed": {
+            $gte: 80
+          }
+        },
+        {
+          "time_items.speed": {
+            $lte: 5
+          }
+        }
+      ]
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      count: {
+        $sum: 1
+      }
+    }
+  }
+])
