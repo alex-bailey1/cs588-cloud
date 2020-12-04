@@ -1,29 +1,32 @@
 db.detector.aggregate([
-   {
-     $unwind: "$time_items"
-   },
-   {
-     $match: {
-       $and: [
-         {
-           "time_items.startime": {
-             $gte: ISODate("2011-09-15T00:00:00.00Z")
-           }
-         },
-         {
-           "time_items.startime": {
-             $lt: ISODate("2011-09-16T00:00:00.00Z")
-           }
-         }
-       ]
-     }
-   },
-   {
-     $group: {
-       _id: null,
-       "total_volume": {
-         "$sum": "$time_items.volume"
-       }
+  {
+    $unwind: "$time_items"
+  },
+  {
+    $match: {
+      $and: [
+        {
+          "locationtext": "Foster NB"
+        },
+        {
+          "time_items.startime": {
+            $gte: ISODate("2011-09-15T00:00:00.00Z")
+          }
+        },
+        {
+          "time_items.startime": {
+            $lt: ISODate("2011-09-16T00:00:00.00Z")
+          }
+        }
+      ]
     }
-   }
- ])
+  },
+  {
+    $group: {
+      _id: null,
+      "total_volume": {
+        "$sum": "$time_items.volume"
+      }
+    }
+  }
+])
